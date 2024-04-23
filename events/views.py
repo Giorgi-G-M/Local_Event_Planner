@@ -17,5 +17,8 @@ def add_event(request):
     return render(request, 'add_event.html', {'form': form})
 
 def event_detail(request, title):
-    event = get_object_or_404(Event, title=title)
-    return render(request, 'event_detail.html', {'event': event})
+    try:
+        event = Event.objects.get(title=title)
+        return render(request, 'event_detail.html', {'event': event})
+    except:
+        return render(request, 'event_detail.html', {'FileNotFound': 'FileNotFound'})
